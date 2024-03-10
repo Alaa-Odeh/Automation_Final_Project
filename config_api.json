@@ -1,0 +1,9 @@
+{
+  "news": "https://api.spaceflightnewsapi.net/v4/",
+  "name": "Spaceflight News API",
+  "version": "1.0.0",
+  "description": "Testing API",
+  "grid": true,
+  "grid type": "parallel",
+  "grid size": 18
+  }
