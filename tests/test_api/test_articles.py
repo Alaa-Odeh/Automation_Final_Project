@@ -19,13 +19,11 @@ class TestArticles(TestCase):
         self.articles.get_articles()
         self.assertEqual(self.articles.response.status_code,200)
 
-    def test_articles_by_id(self):
-        article_id = 22729
+    def test_articles_by_id(self,article_id = 22729):
         self.articles.get_article_by_id(article_id)
         self.assertEqual(self.articles.result['id'],article_id)
 
-    def test_articles_by_phrase(self):
-        phrase = "Aerospace announced"
+    def test_articles_by_phrase(self,phrase = "Aerospace announced"):
         self.articles.get_article_by_phrase_in_summary(phrase)
         self.assertIn(phrase,self.articles.result_summary)
 
@@ -34,14 +32,12 @@ class TestArticles(TestCase):
         for article in self.articles.result_has_event:
             self.assertTrue(article['events'],f"The 'events' field is empty for article with id {article['id']}")
 
-    def test_get_article_by_event_id(self):
-        event_id=915
+    def test_get_article_by_event_id(self,event_id=915):
         self.articles.get_article_by_event_id(event_id)
         for article in self.articles.result_event:
             self.assertEqual(article['events'][0]['event_id'],event_id, f"The 'events' field is not correct for article with id {article['id']}")
 
-    def test_articles_after_timestamp_included(self):
-        timestamp_included = "2024-03-07T13:37:02.212000Z"
+    def test_articles_after_timestamp_included(self,timestamp_included = "2024-03-07T13:37:02.212000Z"):
         timestamp = datetime.strptime(timestamp_included, '%Y-%m-%dT%H:%M:%S.%fZ')
         self.articles.get_articles_updated_after_timestamp_included(timestamp_included)
         for article in self.articles.result_after_timestamp :

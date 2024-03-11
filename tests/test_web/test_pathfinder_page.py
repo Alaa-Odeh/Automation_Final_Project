@@ -1,5 +1,5 @@
+import time
 import unittest
-
 from infra.infra_web.browser_wrapper import BrowserWrapper
 from logic.web_logic.home_page_pathfinder import PathfinderPage
 from logic.web_logic.login_page import LoginPage
@@ -27,9 +27,8 @@ class TestPathfinderPage(unittest.TestCase):
         self.welcome_page = WelcomePage(driver)
         self.welcome_page.click_log_in()
         self.login_page = LoginPage(driver)
-        self.login_page.login_flow("ofriend31@gmail.com", "TesterOlaYoutube")
-
-
+        self.login_page.login_flow("friendola15@gmail.com", "AutomationTester2024")
+        time.sleep(8)
         self.pathfinder_page = PathfinderPage(driver)
         calculated_time=self.pathfinder_page.set_goal_and_calculate_total_estimated_time(10, "HTML", "Professional")
         estimated_time=self.pathfinder_page.set_weekly_hours_slider_and_get_estimated_goal(10)
@@ -45,6 +44,11 @@ class TestPathfinderPage(unittest.TestCase):
 
 
     def test_svg_tutorial(self,driver):
+        self.welcome_page = WelcomePage(driver)
+        self.welcome_page.click_log_in()
+        self.login_page = LoginPage(driver)
+        self.login_page.login_flow("friendola15@gmail.com", "AutomationTester2024")
+        time.sleep(10)
         self.pathfinder_page = PathfinderPage(driver)
         page_header=self.pathfinder_page.choose_learn_svg_tutorials()
         self.assertEqual(page_header,"SVG Tutorial","Wrong Tutorial Page")

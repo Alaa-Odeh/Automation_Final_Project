@@ -35,30 +35,33 @@ class PathfinderPage(object):
 
     def __init__(self, driver):
         self._driver =driver
-        self.tests_button=WebDriverWait(self._driver,15).until(EC.visibility_of_element_located((By.XPATH, self.TESTS_LINK)))
-        self.skills_button=WebDriverWait(self._driver,15).until(EC.visibility_of_element_located((By.XPATH, self.SKILLS_LINK)))
-        self.light_mode_button=WebDriverWait(self._driver,15).until(EC.element_to_be_clickable((By.XPATH, self.TOGGLE_BUTTON)))
-        self._driver.switch_to.frame(driver.find_element(By.XPATH,self.UPPER_FRAME ))
-        self.tutorials_button=WebDriverWait(self._driver, 15).until(EC.element_to_be_clickable((By.XPATH,self.TUTORIALS_BUTTON)))
-        self._driver.switch_to.default_content()
+        wait = WebDriverWait(driver, 20)  # Timeout of 10 seconds
 
     def init(self):
         self.set_a_goal_button=WebDriverWait(self._driver,15).until(EC.visibility_of_element_located((By.XPATH, self.SET_A_GOAL_BUTTON)))
-
+        self.tests_button=WebDriverWait(self._driver,20).until(EC.visibility_of_element_located((By.XPATH, self.TESTS_LINK)))
+        self.light_mode_button=WebDriverWait(self._driver,15).until(EC.element_to_be_clickable((By.XPATH, self.TOGGLE_BUTTON)))
+        self.skills_button=WebDriverWait(self._driver,15).until(EC.visibility_of_element_located((By.XPATH, self.SKILLS_LINK)))
 
     def extract_user_name(self  ):
         h2_element = self._driver.find_element(By.CSS_SELECTOR, "h2.chakra-heading")
         return h2_element.text.split(", ")[1].split(" ")[0]
     def click_svg_link_tutorials(self):
+        self.svg_tutorials_button=WebDriverWait(self._driver,20).until(EC.visibility_of_element_located((By.XPATH, self.LEARN_SVG)))
         self.svg_tutorials_button.click()
     def click_on_tutorials(self):
+        self._driver.switch_to.frame(self._driver.find_element(By.XPATH, self.UPPER_FRAME))
+        self.tutorials_button = WebDriverWait(self._driver, 15).until(
+            EC.element_to_be_clickable((By.XPATH, self.TUTORIALS_BUTTON)))
         self.tutorials_button.click()
+
 
     def click_on_light_mode_button(self):
         self.light_mode_button.click()
     def click_skills_button(self):
         self.skills_button.click()
     def click_on_tests_button(self):
+        self.init()
         self.tests_button.click()
     def click_on_resume_learning_button(self):
         self.resume_learning_button=WebDriverWait(self._driver,20).until(EC.visibility_of_element_located((By.XPATH, self.RESUME_LEARNING_BUTTON)))
@@ -132,7 +135,6 @@ class PathfinderPage(object):
     def set_hours_weekly_slider(self,hours_weekly):
         self._driver.execute_script("arguments[0].scrollIntoView(true);", self.hours_weekly_slider)
         current_value = int(self.hours_weekly_slider.get_attribute("aria-valuenow"))
-        print(current_value)
         offset=(hours_weekly-current_value)
         actions =ActionChains(self._driver)
         actions.click_and_hold(self.hours_weekly_slider).move_by_offset(offset*6, 0)
@@ -169,18 +171,23 @@ class PathfinderPage(object):
 
 
     def get_light_mode_label_before(self):
+        self.init()
         return self.light_mode_button.get_attribute("aria-label")
 
     def get_light_mode_label_after(self):
+        self.init()
         self.click_on_light_mode_button()
         return self.light_mode_button.get_attribute("aria-label")
 
     def choose_learn_svg_tutorials(self):
         self.click_on_tutorials()
-        self.svg_tutorials_button=WebDriverWait(self._driver,10).until(EC.visibility_of_element_located((By.XPATH, self.LEARN_SVG)))
         self.click_svg_link_tutorials()
         svg_tutorial = SvgTutorial(self._driver)
-        return svg_tutorial.get_header().text
+        self._driver.switch_to.window(self._driver.current_window_handle)
+        text=svg_tutorial.get_header().text
+        self._driver.back()
+        return text
+
 
 
 

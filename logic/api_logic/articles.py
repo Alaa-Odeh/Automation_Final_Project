@@ -10,8 +10,8 @@ class Articles:
 
     def get_article_by_id(self,article_id):
         self.new_url=f"{self.new_url}{article_id}/"
-        response = self.api_object.api_get_request(self.new_url)
-        self.result = response.json()
+        self.result = self.api_object.api_get_request(self.new_url).json()
+
 
 
     def get_article_by_phrase_in_summary(self,phrase_in_summary):

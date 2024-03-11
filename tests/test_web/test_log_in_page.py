@@ -8,7 +8,7 @@ from logic.web_logic.login_page import LoginPage
 
 class Login_Page_Test(unittest.TestCase):
     def setUp(self):
-        self.test_cases = [self.test_log_in]
+        self.test_cases = [self.test_invalid_log_in,self.test_log_in]
         self.browser = BrowserWrapper()
 
     def test_run(self):
@@ -25,10 +25,17 @@ class Login_Page_Test(unittest.TestCase):
         self.welcome_page = WelcomePage(driver)
         self.welcome_page.click_log_in()
         self.login_page = LoginPage(driver)
-        self.login_page.login_flow("ofriend31@gmail.com","TesterOlaYoutube")
+        self.login_page.login_flow("friendola15@gmail.com", "AutomationTester2024")
         self.pathfinder_page = PathfinderPage(driver)
         user_name=self.pathfinder_page.extract_user_name()
-        self.assertEqual(user_name,"ola","My W3Scools Account not Logged in")
+        self.assertEqual(user_name,"friend","My W3Scools Account not Logged in")
+
+    def test_invalid_log_in(self,driver):
+        self.welcome_page = WelcomePage(driver)
+        self.welcome_page.click_log_in()
+        self.login_page = LoginPage(driver)
+        Wrong_password=self.login_page.login_with_invalid_password("ofriend31@gmail.com","Tester")
+        self.assertIn("Wrong password",Wrong_password,"My W3Scools Account not Logged in")
 
 
 

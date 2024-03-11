@@ -1,32 +1,41 @@
+import time
 import unittest
 
 from selenium import webdriver
 
+from infra.infra_web.browser_wrapper import BrowserWrapper
 from logic.web_logic.home_page_pathfinder import PathfinderPage
+from logic.web_logic.login_page import LoginPage
 from logic.web_logic.skills_page import SkillsPage
 from selenium.webdriver.chrome.options import Options
 
+from logic.web_logic.welcome_page import WelcomePage
+
+
 class TestSkillsPage(unittest.TestCase):
     def setUp(self):
-        chrome_options = Options()
-        chrome_options.add_argument("--disable-notifications")
-        self._driver = webdriver.Chrome(options=chrome_options)
-        self._driver.get("https://www.w3schools.com/")
-        self._driver.maximize_window()
-        self._driver.add_cookie({"name": "accessToken",
-                                 "value": "eyJraWQiOiJQS0tER0N2cFwvdlpVa1NEZDByem9NRTFEbWNDdElFM3o1V2ZmT0RMWWxJTT0iLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJlZjcwOGQxZS0zOTc0LTQzNTctOTkxNy03MGMwOGMyZmNkNWIiLCJjb2duaXRvOmdyb3VwcyI6WyJ1cy1lYXN0LTFfdUc5U0dYN1dkX0dvb2dsZSJdLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAudXMtZWFzdC0xLmFtYXpvbmF3cy5jb21cL3VzLWVhc3QtMV91RzlTR1g3V2QiLCJ2ZXJzaW9uIjoyLCJjbGllbnRfaWQiOiJkMWdycW1sMGVtaDd2b3RrYjBndHJybjAiLCJ0b2tlbl91c2UiOiJhY2Nlc3MiLCJzY29wZSI6ImF3cy5jb2duaXRvLnNpZ25pbi51c2VyLmFkbWluIG9wZW5pZCIsImF1dGhfdGltZSI6MTcwOTQ1MDgyMywiZXhwIjoxNzA5NDk0MDIzLCJpYXQiOjE3MDk0NTA4MjQsImp0aSI6IjczOTFlNDFjLWMwNTMtNGRiYi1iN2MwLTUyMTFmMWU0ZGY1ZSIsInVzZXJuYW1lIjoiR29vZ2xlXzExNTU0MjYzNDE3OTA1OTgwMTk4OSJ9.Faa5Ls4xWeNQxe93WFwPjuAuABqyapt-3p2twSTZ8S3vEBIWPgjvsFc0mDh1UubRaigav-kd2_gwaWjVX5kT36e_Zv-u2GLqvxrUwVjnywDoPn36iDBuq1B8ADCCh6irbRQwlCo507zOyQvEgywdFCup6D3fnVAnu-kxLNTkqZixsKPwIMzAH5-oOeustTXUNnGnrgXFaZ5789vwWaGt7CPwgCkchHVUFxVOQwZGA1pVJrPLfLAQJzAep-NleVfdBt33DnrCs1ikA2N8wsmb-xhJSnvKevkaQb4Ep1fqgfuhNiEx4fa9dFlrwLzSW5aejXTmaUx8xHolgea3bjRoFw",
-                                 "domain": ".w3schools.com"})
-        self._driver.add_cookie({"name": "userSession", "value": "1", "domain": ".w3schools.com"})
-        self._driver.add_cookie({"name": "userSessionMeta",
-                                 "value": "eyJpZCI6IjA1M2VmZDdiLTE4ZDgtNDRiZC1iZTUzLThkMjNlMDRiNzBjYyIsImlzcyI6MTcwOTQ1MDgyNiwiYXRleHAiOjE3MDk0OTM3MjQsInJ0ZXhwIjoxNzEyMDQyNTI2fQ==",
-                                 "domain": ".w3schools.com"})
-        self._driver.get("https://pathfinder.w3schools.com/")
-        self.pathfinder_page = PathfinderPage(self._driver)
+        self.test_cases = [self.test_my_skills_in_chart]
+        self.browser = BrowserWrapper()
+
+    def test_run(self):
+        if self.browser.config["grid"]:
+            self.browser.build_cap()
+            if self.browser.config["grid type"] == "serial":
+                self.browser.test_grid_serial(self.test_cases)
+            if self.browser.config["grid type"] == "parallel":
+                self.browser.test_grid_parallel(self.test_cases)
+        else:
+            self.browser.run_single_browser(self.test_cases, self.browser.config["browser"])
+
+    def test_my_skills_in_chart(self,driver):
+        self.welcome_page = WelcomePage(driver)
+        self.welcome_page.click_log_in()
+        self.login_page = LoginPage(driver)
+        self.login_page.login_flow("friendola15@gmail.com", "AutomationTester2024")
+        time.sleep(8)
+        self.pathfinder_page = PathfinderPage(driver)
         self.pathfinder_page.click_skills_button()
-        self.my_skills=SkillsPage(self._driver)
-
-
-    def test_my_skills_in_chart(self):
+        self.my_skills = SkillsPage(driver)
         self.my_skills.get_my_skills()
         self.my_skills.get_chart_ticks()
         self.assertListEqual(self.my_skills.all_my_skills,self.my_skills.all_chart_ticks,"Something is missing")

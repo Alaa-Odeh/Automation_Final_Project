@@ -9,7 +9,7 @@ class BasePage:
 
 
     def get_header(self):
-        return WebDriverWait(self._driver,10).until(EC.visibility_of_element_located((By.XPATH, '//h1')))
+        return WebDriverWait(self._driver,20).until(EC.presence_of_element_located((By.TAG_NAME, 'h1')))
 
 
     def get_page_title(self):

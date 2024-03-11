@@ -17,3 +17,10 @@ class APIWrapper(object):
             return self.response
         else:
             return self.response.status_code
+
+    def api_post_request(self,url,body):
+        self.response=self.my_request.post(url,body)
+        if self.response.ok:
+            return self.response
+        else:
+            return self.response.status_code

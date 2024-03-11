@@ -4,6 +4,6 @@
   "version": "1.0.0",
   "description": "Testing API",
   "grid": true,
-  "grid type": "parallel",
+  "grid type": "serial",
   "grid size": 18
   }
