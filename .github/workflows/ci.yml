@@ -15,5 +15,5 @@ jobs:
           python-version: '3.8'
 
       - name: Run test_articles.py
-        run: python -m unittest test_articles.TestArticles
+        run: python -m unittest tests.test_api.test_articles.TestArticles
         working-directory: C:\Users\Alaa Oda\PycharmProjects\pythonProject\tests\test_api\test_articles.py
