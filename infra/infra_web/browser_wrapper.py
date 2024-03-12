@@ -64,8 +64,9 @@ class BrowserWrapper:
         self._driver.get(self.config["url"])
         self._driver.maximize_window()
         for test_case in test_cases:
-            test_case(self._driver)
-            #self._driver.get(self.config["url"])
+
+                test_case(self._driver)
+                self._driver.get(self.config["url"])
 
     def teardown(self):
         self._driver.quit()

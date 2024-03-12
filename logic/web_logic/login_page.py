@@ -12,7 +12,7 @@ class LoginPage():
     PASSWORD_INPUT='//input[@autocomplete="current-password"]'
     PASSWORD_NEXT_BUTTON='//button[./span[contains(text(),"Next")]]'
     LOG_IN_BUTTON='//button[@class="Button_button__URNp+ Button_primary__d2Jt3 Button_fullwidth__0HLEu"]'
-    WRONG_PASSWORD=jsname="//div[@jsname='B34EJ']"
+    WRONG_PASSWORD="//div[@jsname='B34EJ']"
 
 
     def __init__(self, driver):
