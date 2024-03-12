@@ -19,11 +19,8 @@ jobs:
           python -m pip install --upgrade pip
           pip install requests
 
-
-      - name: Create config_api.json
-        run: echo '${{ secrets.CONFIG_API_JSON }}' > ./config_api.json
-        env:
-          CONFIG_API_JSON: ${{ secrets.CONFIG_API_JSON }}
+      - name: Print working directory
+        run: pwd
 
       - name: Run test_articles.py
         run: python -m unittest tests.test_api.test_articles.TestArticles
