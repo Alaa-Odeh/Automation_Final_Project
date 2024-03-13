@@ -3,7 +3,7 @@ pipeline {
     stages {
     stage('Set Python Env') {
             steps {
-                sh '''
+                bat '''
                     python3 -m venv venv
                     source venv/bin/activate
                 '''
