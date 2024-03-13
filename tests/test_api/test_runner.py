@@ -9,8 +9,22 @@ from tests.test_api.test_info import TestInfo
 from tests.test_api.test_reports import TestReports
 
 
+
+class ContinueTestResult(unittest.TextTestResult):
+    def addError(self, test, err):
+        super().addError(test, err)
+        # Do not stop the test suite upon an error
+        return
+
+    def addFailure(self, test, err):
+        super().addFailure(test, err)
+        # Do not stop the test suite upon a failure
+        return
+
+
+
 def run_test_suite(test_suite):
-    runner = unittest.TextTestRunner()
+    runner = unittest.TextTestRunner(resultclass=ContinueTestResult)
     runner.run(test_suite)
 
 suites = [
