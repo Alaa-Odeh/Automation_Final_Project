@@ -1,6 +1,12 @@
 pipeline {
     agent any
     stages {
+        stage('Build') {
+            steps {
+                echo 'Building...'
+                // Your build steps go here
+            }
+        }
         stage('Set Python Env') {
             steps {
                 bat """
@@ -14,12 +20,6 @@ pipeline {
                 bat 'echo %PATH%'
                 bat 'if exist C:\\Python3\\Scripts (echo Scripts directory exists) else (echo Scripts directory does not exist)'
                 // Use the above outputs to debug the issue further
-            }
-        }
-        stage('Build') {
-            steps {
-                echo 'Building...'
-                // Your build steps go here
             }
         }
         stage('Test') {
