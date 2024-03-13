@@ -6,6 +6,14 @@ pipeline {
                 echo 'Building...'
             }
         }
+        stage('Set Python Env') {
+            steps {
+                sh '''
+                    python3 -m venv venv
+                    source venv/bin/activate
+                '''
+            }
+        }
         stage('Test') {
             steps {
                 echo 'Running API tests...'
