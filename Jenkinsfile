@@ -4,7 +4,7 @@ pipeline {
     stage('Set Python Env') {
             steps {
                 bat '''
-                    python3 -m venv venv
+                    python -m venv venv
                     venv\\Scripts\\activate.bat
                 '''
             }
@@ -18,7 +18,10 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Running API tests...'
-                bat 'python3 -m unittest test\\test_api\\test_runner.py'
+                bat """
+            venv\\Scripts\\activate.bat
+            python -m unittest test\\test_api\\test_runner.py
+        """
             }
         }
         stage('Deploy') {
