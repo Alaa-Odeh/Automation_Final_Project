@@ -1,21 +1,21 @@
 pipeline {
     agent any
     stages {
-    stage('Set Python Env') {
+        stage('Set Python Env') {
             steps {
-                bat '''
+                bat """
                     python -m venv venv
-                    venv\\Scripts\\activate.bat
-                '''
+                    call venv\\Scripts\\activate.bat
+                """
             }
         }
         stage('Diagnostic') {
-        steps {
-            bat 'echo %PATH%'
-            bat 'dir C:\\Python3\\Scripts'
-            // Use the above outputs to debug the issue further
+            steps {
+                bat 'echo %PATH%'
+                bat 'if exist C:\\Python3\\Scripts (echo Scripts directory exists) else (echo Scripts directory does not exist)'
+                // Use the above outputs to debug the issue further
+            }
         }
-    }
         stage('Build') {
             steps {
                 echo 'Building...'
@@ -25,8 +25,10 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Running API tests...'
-                bat 'python -m unittest tests\\test_api\\test_runner.py'
-        """
+                bat """
+                    call venv\\Scripts\\activate.bat
+                    python -m unittest tests\\test_api\\test_runner.py
+                """
             }
         }
         stage('Deploy') {
