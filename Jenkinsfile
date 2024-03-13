@@ -1,48 +1,58 @@
 pipeline {
     agent any
+
+    environment {
+        PIP_PATH = 'C:\\Users\\Moham\\AppData\\Local\\Programs\\Python\\Python311\\Scripts\\pip.exe'
+        PYTHON_PATH = 'C:\\Users\\Moham\\AppData\\Local\\Programs\\Python\\Python311\\python.exe'
+    }
+
     stages {
+        stage('Setup Environment') {
+            steps {
+                echo '$path'
+                echo 'Setting up Python environment...'
+                bat 'C:\\Users\\Moham\\AppData\\Local\\Programs\\Python\\Python311\\python.exe -m venv venv'
+                bat 'venv\\Scripts\\python.exe -m pip install --upgrade pip'
+                bat 'venv\\Scripts\\pip.exe install -r requirements.txt'
+            }
+        }
+
         stage('Build') {
             steps {
-                echo 'Building...'
-                // Your build steps go here
-                echo $path
+                echo 'Building..'
+                // Your build steps here
             }
         }
-        stage('Set Python Env') {
-            steps {
-                bat """
-                    python -m venv venv
-                    call venv\\Scripts\\activate.bat
-                """
-            }
-        }
-        stage('Diagnostic') {
-            steps {
-                bat 'echo %PATH%'
-                bat 'if exist C:\\Python3\\Scripts (echo Scripts directory exists) else (echo Scripts directory does not exist)'
-                // Use the above outputs to debug the issue further
-            }
-        }
+
         stage('Test') {
             steps {
-                echo 'Running API tests...'
-                bat """
-                    call venv\\Scripts\\activate.bat
-                    python -m unittest tests\\test_api\\test_runner.py
-                """
+                echo 'Testing..'
+                bat "venv\\Scripts\\python.exe -m unittest Tests/test_api/test_runner.py"
             }
         }
+
         stage('Deploy') {
             steps {
-                echo 'Deploying...'
-                // Your deploy steps go here
+                echo 'Deploying..'
+                // Your deployment steps here
             }
         }
     }
+
     post {
         always {
-            // This will always run after the stages, even if they fail
-            echo 'This will always run as a cleanup or notification step.'
+            echo 'Cleaning up...'
+            bat "rd /s /q venv"
+        }
+
+        success {
+            echo 'Build succeeded.'
+            // Additional steps for successful build
+        }
+
+        failure {
+            echo 'Build failed.'
+            // Additional steps for failed build
         }
     }
 }
