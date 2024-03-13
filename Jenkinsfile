@@ -2,18 +2,16 @@ pipeline {
     agent any
 
     environment {
-        PIP_PATH = " C:\\Users\\Alaa Oda\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\pip"
-        PYTHON_PATH = "C:\\Users\\Alaa Oda\\AppData\\Local\\Programs\\Python\\Python312\\python.exe"
+        PIP_PATH = "\"C:\\Users\\Alaa Oda\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\pip\""
+        PYTHON_PATH = "\"C:\\Users\\Alaa Oda\\AppData\\Local\\Programs\\Python\\Python312\\python.exe\""
     }
 
     stages {
         stage('Setup Environment') {
             steps {
-                echo '$path'
                 echo 'Setting up Python environment...'
-                bat "C:\\Users\\Alaa Oda\\AppData\\Local\\Programs\\Python\\Python312\\python.exe"
-
-                bat 'venv\\Scripts\\pip.exe install -r requirements.txt'
+                bat "%PYTHON_PATH% -m venv venv"
+                bat "call venv\\Scripts\\activate.bat && venv\\Scripts\\pip.exe install -r requirements.txt"
             }
         }
 
