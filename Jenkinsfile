@@ -15,13 +15,6 @@ pipeline {
             }
         }
 
-        stage('Build') {
-            steps {
-                echo 'Building..'
-                // Your build steps here
-            }
-        }
-
 
         stage('Test') {
             steps {
@@ -45,12 +38,12 @@ pipeline {
         }
 
         success {
-            echo 'Build succeeded.'
+            echo 'Test succeeded.'
             // Additional steps for successful build
         }
 
         failure {
-            echo 'Build failed.'
+            echo 'Test failed.'
             // Additional steps for failed build
         }
     }
