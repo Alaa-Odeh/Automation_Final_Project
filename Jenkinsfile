@@ -27,5 +27,3 @@ pipeline {
         }
     }
 }
-selenium~=4.18.1
-requests~=2.28.2
