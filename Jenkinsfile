@@ -4,25 +4,23 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building...'
-                // Your build steps go here
             }
         }
         stage('Test') {
             steps {
                 echo 'Running API tests...'
-                bat 'python -m unittest test\\test_api\\test_runner.py'
+                // Replace "C:\\Path\\To\\Python\\python.exe" with the actual path where Python is installed
+                bat 'C:\Users\Alaa Oda\AppData\Local\Programs\Python\Python312\\python.exe -m unittest test\\test_api\\test_runner.py'
             }
         }
         stage('Deploy') {
             steps {
                 echo 'Deploying...'
-                // Your deploy steps go here
             }
         }
     }
     post {
         always {
-            // This will always run after the stages, even if they fail
             echo 'This will always run as a cleanup or notification step.'
         }
     }
