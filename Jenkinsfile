@@ -18,9 +18,7 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Running API tests...'
-                bat """
-            venv\\Scripts\\activate.bat
-            python -m unittest test\\test_api\\test_runner.py
+                bat 'python -m unittest tests\\test_api\\test_runner.py'
         """
             }
         }
