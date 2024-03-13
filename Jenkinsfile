@@ -22,13 +22,7 @@ pipeline {
             }
         }
 
-         stage('Test') {
-            steps {
-                echo 'Testing..'
-                // Add test execution steps here
-                bat 'python -m unittest API_tests_on_GamePower_and_UI_tests_on_YouTube/tests/api_test/api_test.py'
-            }
-        }
+
         stage('Test') {
             steps {
                 echo 'Testing..'
