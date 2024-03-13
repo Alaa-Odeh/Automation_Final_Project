@@ -1,29 +1,58 @@
 pipeline {
     agent any
 
+    environment {
+        PIP_PATH = ' C:\Users\Alaa Oda\AppData\Local\Programs\Python\Python312\Lib\site-packages\pip'
+        PYTHON_PATH = 'C:\Users\Alaa Oda\AppData\Local\Programs\Python\Python312\python.exe'
+    }
+
     stages {
+        stage('Setup Environment') {
+            steps {
+                echo '$path'
+                echo 'Setting up Python environment...'
+                bat 'C:/Users/Alaa Oda/AppData/Local/Programs/Python/Python312/python.exe -m venv venv'
+                bat 'venv\\Scripts\\python.exe -m pip install --upgrade pip'
+                bat 'venv\\Scripts\\pip.exe install -r requirements.txt'
+            }
+        }
+
         stage('Build') {
             steps {
                 echo 'Building..'
-//                 sh 'python -m pip install --upgrade pip'
-                bat 'pip install -r requirements.txt'
-
+                // Your build steps here
             }
         }
+
         stage('Test') {
             steps {
                 echo 'Testing..'
-                // Add test execution steps here
-                bat 'python -m unittest API_tests_on_GamePower_and_UI_tests_on_YouTube/tests/api_test/api_test.py'
+                bat "venv\\Scripts\\python.exe -m unittest Tests/test_api/test_runner.py"
             }
         }
+
         stage('Deploy') {
             steps {
                 echo 'Deploying..'
-//                 git 'commit -am "Deploying latest changes"'
-//                 git 'push origin main'
-
+                // Your deployment steps here
             }
+        }
+    }
+
+    post {
+        always {
+            echo 'Cleaning up...'
+            bat "rd /s /q venv"
+        }
+
+        success {
+            echo 'Build succeeded.'
+            // Additional steps for successful build
+        }
+
+        failure {
+            echo 'Build failed.'
+            // Additional steps for failed build
         }
     }
 }
