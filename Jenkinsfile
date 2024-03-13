@@ -10,7 +10,7 @@ pipeline {
         stage('Setup Environment') {
             steps {
                 echo 'Setting up Python environment...'
-                bat "%venv/bin/activate% -m venv venv"
+                bat "%PYTHON_PATH% -m venv venv"
                 bat "call venv\\Scripts\\activate.bat && venv\\Scripts\\pip.exe install -r requirements.txt"
             }
         }
