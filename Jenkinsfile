@@ -5,6 +5,7 @@ pipeline {
             steps {
                 echo 'Building...'
                 // Your build steps go here
+                echo $path
             }
         }
         stage('Set Python Env') {
