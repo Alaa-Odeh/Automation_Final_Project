@@ -19,7 +19,7 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Testing..'
-                bat "venv\\Scripts\\python.exe -m unittest tests/test_api/test_runner.py"
+                bat "venv\\Scripts\\python.exe -m unittest tests/test_api/test_blogs.py"
             }
         }
 
