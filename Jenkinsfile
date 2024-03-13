@@ -11,7 +11,7 @@ pipeline {
             steps {
                 echo '$path'
                 echo 'Setting up Python environment...'
-                bat 'C:\\Users\\Alaa Oda\\AppData\\Local\\Programs\\Python\\Python312\\python.exe'
+                bat 'C:\\Users\\Alaa Oda\\AppData\\Local\\Programs\\Python\\Python312\\python.exe -m venv venv'
                 bat 'venv\\Scripts\\python.exe -m pip install --upgrade pip'
                 bat 'venv\\Scripts\\pip.exe install -r requirements.txt'
             }
