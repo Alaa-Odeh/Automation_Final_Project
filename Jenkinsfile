@@ -10,7 +10,7 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Running API tests...'
-                bat 'python3 -m unittest test\\test_api\\test_runner.py'
+                bat 'python -m unittest test\\test_api\\test_runner.py'
             }
         }
         stage('Deploy') {
