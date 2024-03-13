@@ -11,7 +11,6 @@ pipeline {
             steps {
                 echo 'Setting up Python environment...'
                 bat "%PYTHON_PATH% -m venv venv"
-                bat "call venv\\Scripts\\activate.bat && venv\\Scripts\\pip.exe install -r requirements.txt"
             }
         }
 
