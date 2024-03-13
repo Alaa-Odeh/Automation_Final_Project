@@ -19,7 +19,7 @@ suites = [
         unittest.TestLoader().loadTestsFromTestCase(TestArticles),
         unittest.TestLoader().loadTestsFromTestCase(TestInfo),
     ]
-config_path = '../../config_api.json'
+config_path = './config_api.json'
 with open(config_path, 'r') as config_file:
     config = json.load(config_file)
 if __name__ == '__main__':
