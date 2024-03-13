@@ -12,7 +12,7 @@ pipeline {
         stage('Diagnostic') {
         steps {
             bat 'echo %PATH%'
-            bat 'dir C:\\Python39\\Scripts'
+            bat 'dir C:\\Python3\\Scripts'
             // Use the above outputs to debug the issue further
         }
     }
