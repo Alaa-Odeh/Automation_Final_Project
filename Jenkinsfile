@@ -16,13 +16,19 @@ pipeline {
             }
         }
 
-        stage('Run API Test') {
+        stage('Run Tests in Parallel') {
             steps {
-                bat "docker run --name tests.test_api.test_runner ${IMAGE_NAME}:${TAG} python tests.test_api.test_runner.py"
-                bat "docker rm tests.test_api.test_runner"
+                script {
+                    parallel(
+                        'API Test': {
+                            bat "docker run --name api_test_runner ${IMAGE_NAME}:${TAG} python api_test_runner.py"
+                            bat "docker rm api_test_runner"
+                        }
+
+                    )
+                }
             }
         }
-
     }
 
     post {
