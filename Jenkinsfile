@@ -1,8 +1,8 @@
 pipeline {
     agent any
     environment {
-        PYTHON_PATH = 'C:\\Users\\Alaa Oda\\AppData\\Local\\Programs\\Python\\Python312\\python.exe'
-        PIP_PATH = 'C:\\Users\\Alaa Oda\\AppData\\Local\\Programs\\Python\\Python312\\Scripts\\pip.exe'
+        PYTHON_PATH = "\"C:\\Users\\Alaa Oda\\AppData\\Local\\Programs\\Python\\Python312\\python.exe\""
+        PIP_PATH = "\"C:\\Users\\Alaa Oda\\AppData\\Local\\Programs\\Python\\Python312\\Scripts\\pip.exe""
     }
     stages {
         stage('Setup Environment') {
