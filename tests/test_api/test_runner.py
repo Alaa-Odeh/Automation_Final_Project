@@ -29,7 +29,7 @@ class ContinueTestResult(unittest.TextTestResult):
 def run_test_suite(test_suite):
     runner = unittest.TextTestRunner(resultclass=ContinueTestResult)
     runner.run(test_suite)
-
+##
 suites = [
         unittest.TestLoader().loadTestsFromTestCase(TestReports),
         unittest.TestLoader().loadTestsFromTestCase(TestBlogs),
