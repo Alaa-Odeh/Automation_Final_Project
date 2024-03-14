@@ -6,7 +6,7 @@ from selenium.webdriver.support import expected_conditions as EC
 
 
 class LoginPage():
-    CONTINUE_WITH_GOOGLE="//button[@class='ButtonV2_button_wrapper__Tb921 ButtonV2_btn_green__UfRit LoginModal_cta_bottom_box_button_google_login__qKvO2']"
+    CONTINUE_WITH_GOOGLE="//div[contains(text(),'Continue with Google')]"
     EMAIL_INPUT = '//input[@autocomplete="username"]'
     NEXT_BUTTON='//button[./span[contains(text(),"Next")]]'
     PASSWORD_INPUT='//input[@autocomplete="current-password"]'
@@ -17,11 +17,13 @@ class LoginPage():
 
     def __init__(self, driver):
         self._driver =driver
-        self.continue_with_google=self._driver.find_element(By.XPATH,self.CONTINUE_WITH_GOOGLE)
-        self.log_in_button= self._driver.find_element(By.XPATH,self.LOG_IN_BUTTON)
 
+    def init(self):
+        self.continue_with_google = self._driver.find_element(By.XPATH, self.CONTINUE_WITH_GOOGLE)
+        self.log_in_button = self._driver.find_element(By.XPATH, self.LOG_IN_BUTTON)
 
     def click_continue_with_google_button(self):
+        self.init()
         self.continue_with_google.click()
 
     def fill_email_input_field(self,email):
