@@ -1,3 +1,4 @@
+import concurrent
 import json
 import os
 import time
@@ -44,8 +45,18 @@ if __name__ == '__main__':
     start_time = time.time()
     if config["grid type"] == "parallel":
         # Run the test suites in parallel using ThreadPoolExecutor
-        with ThreadPoolExecutor(max_workers=config["grid size"]) as executor:
-            executor.map(run_test_suite, suites)
+        with concurrent.futures.ThreadPoolExecutor(max_workers=config["grid size"]) as executor:
+            future_to_test_case = {
+                        executor.submit(run_test_suite, suite) for suite in suites
+                    }
+
+        for future in concurrent.futures.as_completed(future_to_test_case):
+            test_case = future_to_test_case[future]
+            try:
+                future.result()
+            except Exception as exc:
+                print('%r generated an exception: %s' % (test_case, exc))
+
     elif config["grid type"] == "serial":
         for suite in suites:
             run_test_suite(suite)
