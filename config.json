@@ -4,7 +4,7 @@
   "description": "Testing website",
   "url": "https://www.w3schools.com/",
   "hub_url": "http://localhost:4444/wd/hub",
-  "grid": false,
+  "grid": true,
   "browser": "Chrome",
   "grid type": "parallel",
   "grid size": 3
