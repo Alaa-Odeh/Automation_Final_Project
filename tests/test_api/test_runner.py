@@ -12,7 +12,7 @@ from tests.test_api.test_info import TestInfo
 from tests.test_api.test_reports import TestReports
 
 
-
+##
 class ContinueTestResult(unittest.TextTestResult):
     def addError(self, test, err):
         super().addError(test, err)
