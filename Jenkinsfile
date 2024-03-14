@@ -14,7 +14,7 @@ pipeline {
         }
         stage('Selenium Tests') {
             steps {
-                bat 'call venv\\Scripts\\python.exe -m unittest discover -s tests\\test_web -p "test_log_in_page.test_run.py"'
+                bat 'call venv\\Scripts\\python.exe -m unittest discover -s tests\\test_web -p "test_log_in_page.Login_Page_Test.test_run.py"'
             }
         }
     }
