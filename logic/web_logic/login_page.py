@@ -17,6 +17,7 @@ class LoginPage():
 
     def __init__(self, driver):
         self._driver =driver
+        self._driver.implicitly_wait(5)
 
     def init(self):
         self.continue_with_google = self._driver.find_element(By.XPATH, self.CONTINUE_WITH_GOOGLE)
