@@ -30,3 +30,9 @@ jobs:
 
       - name: Run UI test_login.py
         run: python -m unittest tests.test_web.test_log_in_page.Login_Page_Test.test_run
+
+      - name: Send GitHub Action trigger data to Slack workflow
+        id: slack
+        uses: slackapi/slack-github-action@v1.25.0
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
