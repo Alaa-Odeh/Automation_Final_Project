@@ -18,7 +18,7 @@ pipeline {
 
         stage('Run API Test') {
             steps {
-                bat "docker run --name test.test_runner ${IMAGE_NAME}:${TAG} python test.test_runner.py"
+                bat "docker run --name tests.test_runner ${IMAGE_NAME}:${TAG} python tests.test_runner.py"
                 bat "docker rm test.test_runner"
             }
         }

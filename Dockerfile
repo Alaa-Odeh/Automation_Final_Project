@@ -38,4 +38,4 @@ RUN pip install --upgrade pip
 COPY . .
 
 #run command line
-CMD ["python", "-m", "unittest", "tests.test_web.test_log_in_page.Login_Page_Test.test_run"]
+#CMD ["python", "-m", "unittest", "tests.test_web.test_log_in_page.Login_Page_Test.test_run"]
