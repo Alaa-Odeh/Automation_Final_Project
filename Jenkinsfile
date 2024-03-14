@@ -21,10 +21,13 @@ pipeline {
                 script {
                     parallel(
                         'API Test': {
-                            bat "docker run --name tests.test_web.test_log_in_page.Login_Page_Test.test_run ${IMAGE_NAME}:${TAG} python tests.test_web.test_log_in_page.Login_Page_Test.test_run.py"
-                            bat "docker rm tests.test_web.test_log_in_page.Login_Page_Test.test_run"
-                        }
-
+                            // Correct the docker run command to point to the correct script file
+                            bat "docker run --name api_test_container ${IMAGE_NAME}:${TAG} python -m unittest discover -s tests/test_api -p test_runner.py"
+                            // Ensure the container is stopped before removing it
+                            bat "docker stop api_test_container"
+                            bat "docker rm api_test_container"
+                        },
+                        // Add other parallel tests here as necessary
                     )
                 }
             }
@@ -34,7 +37,12 @@ pipeline {
     post {
         always {
             echo 'Cleaning up...'
-            bat "docker rmi ${IMAGE_NAME}:${TAG}"
+            // Stop and remove any stray containers that might be using the image
+            // Use the correct container names as per the tests run
+            bat "docker stop api_test_container || true"
+            bat "docker rm api_test_container || true"
+            // Force remove the Docker image, if necessary, to clean up
+            bat "docker rmi -f ${IMAGE_NAME}:${TAG}"
         }
     }
 }
