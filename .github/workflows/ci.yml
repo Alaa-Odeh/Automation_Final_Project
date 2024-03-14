@@ -25,7 +25,7 @@ jobs:
       - name: Setup FirefoxDriver
         uses: browser-actions/setup-firefox@latest
 
-  Tests:
+  tests:
     name: Tests
     runs-on: ubuntu-latest
     steps:
