@@ -21,8 +21,8 @@ pipeline {
                 script {
                     parallel(
                         'API Test': {
-                            bat "docker run --name api_test_runner ${IMAGE_NAME}:${TAG} python api_test_runner.py"
-                            bat "docker rm api_test_runner"
+                            bat "docker run --name tests.test_web.test_log_in_page.Login_Page_Test.test_run ${IMAGE_NAME}:${TAG} python tests.test_web.test_log_in_page.Login_Page_Test.test_run.py"
+                            bat "docker rm tests.test_web.test_log_in_page.Login_Page_Test.test_run"
                         }
 
                     )
