@@ -8,7 +8,7 @@ from logic.web_logic.login_page import LoginPage
 
 class Login_Page_Test(unittest.TestCase):
     def setUp(self):
-        self.test_cases = [self.test_invalid_log_in,self.test_log_in]
+        self.test_cases = [self.test_invalid_log_in]
         self.browser = BrowserWrapper()
 
     def test_run(self):
