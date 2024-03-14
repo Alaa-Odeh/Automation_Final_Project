@@ -38,7 +38,7 @@ pipeline {
                     parallel(
                         'web Test': {
                             // Correct the docker run command to point to the correct script file
-                            bat "docker run --name web_test_container ${IMAGE_NAME}:${TAG} python -m unittest discover -s tests/test_web -p test_log_in_page.py"
+                            bat "docker run --name web_test_container ${IMAGE_NAME}:${TAG} python -m unittest discover -s tests/test_web -p test_log_in_page.test_run.py"
                             // Ensure the container is stopped before removing it
                             bat "docker stop web_test_container"
                             bat "docker rm web_test_container"
