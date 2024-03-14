@@ -7,14 +7,14 @@ pipeline {
     stages {
         stage('Setup Environment') {
             steps {
-                bat '"${PYTHON_PATH}" -m venv venv'
+                bat '"%PYTHON_PATH%" -m venv venv'
                 bat 'venv\\Scripts\\python.exe -m pip install --upgrade pip'
                 bat 'venv\\Scripts\\pip.exe install -r requirements.txt'
             }
         }
         stage('Selenium Tests') {
             steps {
-                bat '"${PYTHON_PATH}" -m unittest discover -s tests\\test_web -p test_log_in_page.test_run.py'
+                bat '"%PYTHON_PATH%" -m unittest discover -s tests\\test_web -p test_log_in_page.test_run.py'
             }
         }
     }
