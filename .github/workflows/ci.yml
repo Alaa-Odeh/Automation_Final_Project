@@ -31,8 +31,13 @@ jobs:
       - name: Run UI test_login.py
         run: python -m unittest tests.test_web.test_log_in_page.Login_Page_Test.test_run
 
-      - name: Send GitHub Action trigger data to Slack workflow
+      - name: Post to a Slack channel
         id: slack
         uses: slackapi/slack-github-action@v1.25.0
+        with:
+
+          channel-id: 'C06Q6JPDAQ0'
+          # For posting a simple plain text message
+          slack-message: "GitHub build result: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
         env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
