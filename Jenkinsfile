@@ -57,6 +57,8 @@ pipeline {
             // Use the correct container names as per the tests run
             bat "docker stop api_test_container || true"
             bat "docker rm api_test_container || true"
+            bat "docker stop web_test_container || true"
+            bat "docker rm web_test_container || true"
             // Force remove the Docker image, if necessary, to clean up
             bat "docker rmi -f ${IMAGE_NAME}:${TAG}"
         }
