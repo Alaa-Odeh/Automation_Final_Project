@@ -1,7 +1,9 @@
 import concurrent
 import time
 from concurrent import futures
+from pathlib import Path
 
+from selenium.webdriver.chrome.options import Options
 from selenium import webdriver
 import json
 
@@ -10,7 +12,8 @@ class BrowserWrapper:
 
     def __init__(self):
         self._driver = None
-        config_path = '../../config.json'
+        config_path  = Path(__file__).resolve().parents[2].joinpath("config.json")
+
         with open(config_path, 'r') as config_file:
             self.config = json.load(config_file)
         self.hub_url = self.config["hub_url"]
@@ -56,6 +59,13 @@ class BrowserWrapper:
 
     def run_single_browser(self,test_cases,browser,user=None):
         if browser == "Chrome":
+            chrome_options = Options()
+            #chrome_options.add_argument("--headless")  # for headless mode
+            #chrome_options.add_argument("--no-sandbox")  # necessary for running as root within Docker
+            #chrome_options.add_argument("--disable-dev-shm-usage")  # overcome limited resource problems
+            #chrome_options.add_argument("--verbose")  # adds verbose logging
+            #chrome_options.add_argument("--log-path=chromedriver.log")  # specifies location of the log file
+
             self._driver = webdriver.Chrome()
         elif browser == "FireFox":
             self._driver = webdriver.Firefox()

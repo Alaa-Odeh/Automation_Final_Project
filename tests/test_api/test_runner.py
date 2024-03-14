@@ -1,7 +1,9 @@
 import json
+import os
 import time
 import unittest
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from pathlib import Path
 
 from tests.test_api.test_articles import TestArticles
 from tests.test_api.test_blogs import TestBlogs
@@ -33,8 +35,10 @@ suites = [
         unittest.TestLoader().loadTestsFromTestCase(TestArticles),
         unittest.TestLoader().loadTestsFromTestCase(TestInfo),
     ]
-config_path = './config_api.json'
-with open(config_path, 'r') as config_file:
+cur_dir = Path(__file__).resolve().parents[2].joinpath("config_api.json")
+
+config_path = str(cur_dir)+'\\config_api.json'
+with open(cur_dir, 'r') as config_file:
     config = json.load(config_file)
 if __name__ == '__main__':
     start_time = time.time()

@@ -1,4 +1,5 @@
 import json
+from pathlib import Path
 
 import requests
 
@@ -6,7 +7,8 @@ class APIWrapper(object):
     def __init__(self):
         self.response=None
         self.my_request=requests
-        config_path = './config_api.json'
+        config_path  = Path(__file__).resolve().parents[2].joinpath("config_api.json")
+
         with open(config_path, 'r') as config_file:
             self.config = json.load(config_file)
         self.url = self.config["news"]
