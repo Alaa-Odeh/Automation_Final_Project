@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment {
         PYTHON_PATH = "C:\\Users\\Alaa Oda\\AppData\\Local\\Programs\\Python\\Python312\\python.exe"
-        PIP_PATH = "C:\\Users\\Alaa Oda\\AppData\\Local\\Programs\\Python\\Python312\\Scripts\\pip.exe"
+        PIP_PATH = '"C:\\Users\\Alaa Oda\\AppData\\Local\\Programs\\Python\\Python312\\Scripts\\pip.exe"'
         TEST_REPORTS = 'test-reports'
     }
     stages {
@@ -15,7 +15,7 @@ pipeline {
         }
         stage('Run API Tests with Pytest') {
             steps {
-                bat "${env.PYTHON} -m pytest tests/test_api/api_test_runner.py --html=${TEST_REPORTS}\\report.html --self-contained-html"
+                 bat '%PYTHON% -m pytest tests/test_api/api_test_runner.py --html=%TEST_REPORTS%\\report.html --self-contained-html'
             }
         }
 
