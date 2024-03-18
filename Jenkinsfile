@@ -15,7 +15,7 @@ pipeline {
         }
         stage('Run API Tests with Pytest') {
             steps {
-                 bat '%PYTHON% -m pytest tests/test_api/api_test_runner.py --html=%TEST_REPORTS%\\report.html --self-contained-html'
+                bat '%PYTHON% -m pytest tests/test_api/api_test_runner.py --html=test-reports\\report.html --self-contained-html'
             }
         }
 
