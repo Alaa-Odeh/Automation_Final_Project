@@ -37,7 +37,7 @@ jobs:
         continue-on-error: true
         run: |
             pytest  tests/test_api/api_test_runner.py --html=report_api.html --self-contained-html
-            pytest -m tests.test_web.test_log_in_page.Login_Page_Test.test_run --html=report_ui.html --self-contained-html
+            pytest  tests.test_web.test_log_in_page.Login_Page_Test.test_run --html=report_ui.html --self-contained-html
           
 
       - name: Upload Test Report
@@ -46,17 +46,6 @@ jobs:
         with:
           name: Test-Reports
           path: ./*.html
-
-      - name: Notify Slack on failure
-        if: failure()
-        uses: rtCamp/action-slack-notify@v2
-        env:
-          SLACK_CHANNEL: C06Q6FRSFKJ
-          SLACK_COLOR: 'danger'
-          SLACK_MESSAGE: 'Test Failed: ${{ github.run_id }}'
-          SLACK_TITLE: 'Test Execution Failed'
-          SLACK_USERNAME: 'GitHub Actions'
-          SLACK_WEBHOOK: 'https://hooks.slack.com/services/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'
 
       - name: Notify Slack on success
         if: success()
@@ -67,4 +56,15 @@ jobs:
           SLACK_MESSAGE: 'Test Succeeded: ${{ github.run_id }}'
           SLACK_TITLE: 'Test Execution Succeeded'
           SLACK_USERNAME: 'GitHub Actions'
-          SLACK_WEBHOOK: 'https://hooks.slack.com/services/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'
+          SLACK_WEBHOOK: 'https://hooks.slack.com/services/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'
+
+      - name: Notify Slack on failure
+        if: failure()
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_CHANNEL: C06Q6FRSFKJ
+          SLACK_COLOR: 'danger'
+          SLACK_MESSAGE: 'Test Failed: ${{ github.run_id }}'
+          SLACK_TITLE: 'Test Execution Failed'
+          SLACK_USERNAME: 'GitHub Actions'
+          SLACK_WEBHOOK: 'https://hooks.slack.com/services/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'
