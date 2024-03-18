@@ -51,7 +51,7 @@ jobs:
           SLACK_COLOR: 'danger'
           SLACK_MESSAGE: 'Test Failed: ${{ github.run_id }}'
           SLACK_TITLE: 'Test Execution Failed'
-          SLACK_WEBHOOK: 'https://hooks.slack.com/services/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'
+          SLACK_WEBHOOK: 'https://hooks.slack.com/services/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'
 
       - name: Notify Slack on success
         if: success()
@@ -61,4 +61,4 @@ jobs:
           SLACK_COLOR: 'good'
           SLACK_MESSAGE: 'Test Succeeded: ${{ github.run_id }}'
           SLACK_TITLE: 'Test Execution Succeeded'
-          SLACK_WEBHOOK: 'https://hooks.slack.com/services/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'
+          SLACK_WEBHOOK: 'https://hooks.slack.com/services/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'
