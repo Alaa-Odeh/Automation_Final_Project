@@ -16,17 +16,15 @@ pipeline {
         stage('Run API Tests with Pytest') {
             steps {
                 // Run pytest with the HTML report flag
-                bat "%PYTHON% -m pytest --html=${TEST_REPORTS}\\report.html --self-contained-html"
+                bat "%PYTHON_PATH% -m pytest --html=${TEST_REPORTS}\\report.html --self-contained-html"
             }
         }
     }
     post {
         always {
-            // Archive the HTML report
+
             archiveArtifacts artifacts: "${TEST_REPORTS}/*.html", allowEmptyArchive: true
 
-            // If you also generate JUnit-style XML reports, you can publish them like this:
-            // junit "${TEST_REPORTS}/*.xml"
         }
     }
 }
