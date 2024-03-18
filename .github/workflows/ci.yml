@@ -17,7 +17,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt pytest 
+          pip install -r requirements.txt pytest pytest-html
 
       - name: Setup ChromeDriver
         uses: browser-actions/setup-chrome@latest
@@ -33,8 +33,8 @@ jobs:
 
       - name: Run tests with pytest and generate report
         run: |
-            pytest tests/test_api/api_test_runner.py --junitxml=report_api.html
-            pytest tests/test_web/test_log_in_page.py --junitxml=report_ui.html
+            pytest tests/test_api/api_test_runner.py --html=report_api.html
+            pytest tests/test_web/test_log_in_page.py --html=report_ui.html
           
 
       - name: Upload Test Report

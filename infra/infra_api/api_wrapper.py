@@ -2,8 +2,10 @@ import json
 from pathlib import Path
 
 import requests
+from jira import JIRA
 
-class APIWrapper(object):
+
+class APIWrapper():
     def __init__(self):
         self.response=None
         self.my_request=requests
@@ -12,6 +14,19 @@ class APIWrapper(object):
         with open(config_path, 'r') as config_file:
             self.config = json.load(config_file)
         self.url = self.config["news"]
+        token = 'ATATT3xFfGF09zxxyNEWZufXBZbGVJog8nRzG7_IggWzimhiYh0ZbFTfvsYNHfuCe_c1A_th5eeCINDMAvtgOWgGxLMtsNChMb-DRin7X8ip-sQxFFfuPJC-kvvwfuHeV2VATrvBPINg07GBKs9IkzwX20JpJLwKnF3uu-7tT3zIHqDo4qpyc6E=0C5BD39D'
+        self.auth_jira = JIRA(basic_auth=("kharbosh.computer@gmail.com", token),
+                         options={'server': self.config['jira_url']})
+        self.project_key=self.config['project_key']
+    def create_issue(self,summary,description,project_key,assignee='alaa odeh',issue_type='Bug'):
+        issue_dict={
+            'summary': summary,
+            'description': description,
+            'project':{'key': project_key},
+            'issuetype': {'name':issue_type},
+            'assignee': assignee}
+        new_issue = self.auth_jira.create_issue(fields=issue_dict)
+        return new_issue.key
 
     def api_get_request(self,url):
         self.response=self.my_request.get(url)
@@ -26,3 +41,4 @@ class APIWrapper(object):
             return self.response
         else:
             return self.response.status_code
+

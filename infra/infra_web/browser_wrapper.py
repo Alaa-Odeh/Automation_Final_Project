@@ -3,6 +3,7 @@ import time
 from concurrent import futures
 from pathlib import Path
 
+from jira import JIRA
 from selenium.webdriver.chrome.options import Options
 from selenium import webdriver
 import json
@@ -17,6 +18,9 @@ class BrowserWrapper:
         with open(config_path, 'r') as config_file:
             self.config = json.load(config_file)
         self.hub_url = self.config["hub_url"]
+
+        token = 'ATATT3xFfGF09zxxyNEWZufXBZbGVJog8nRzG7_IggWzimhiYh0ZbFTfvsYNHfuCe_c1A_th5eeCINDMAvtgOWgGxLMtsNChMb-DRin7X8ip-sQxFFfuPJC-kvvwfuHeV2VATrvBPINg07GBKs9IkzwX20JpJLwKnF3uu-7tT3zIHqDo4qpyc6E=0C5BD39D'
+        auth_jira = JIRA(basic_auth=("kharbosh.computer @ gmail.com", token), options={'server': self.config['jira_url']})
         print("Test Start")
 
 
@@ -60,13 +64,13 @@ class BrowserWrapper:
     def run_single_browser(self,test_cases,browser,user=None):
         if browser == "Chrome":
             chrome_options = Options()
-            #chrome_options.add_argument("--headless")  # for headless mode
-            #chrome_options.add_argument("--no-sandbox")  # necessary for running as root within Docker
-            #chrome_options.add_argument("--disable-dev-shm-usage")  # overcome limited resource problems
+           #chrome_options.add_argument("--headless")  # for headless mode
+           #chrome_options.add_argument("--no-sandbox")  # necessary for running as root within Docker
+           #chrome_options.add_argument("--disable-dev-shm-usage")  # overcome limited resource problems
             #chrome_options.add_argument("--verbose")  # adds verbose logging
             #chrome_options.add_argument("--log-path=chromedriver.log")  # specifies location of the log file
 
-            self._driver = webdriver.Chrome()
+            self._driver = webdriver.Chrome(options=chrome_options)
         elif browser == "FireFox":
             self._driver = webdriver.Firefox()
         elif browser == "Edge":
