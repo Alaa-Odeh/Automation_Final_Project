@@ -50,9 +50,8 @@ jobs:
       - name: Notify Slack on success
         uses: rtCamp/action-slack-notify@v2
         if: success()
-        with:
-          channel-id: 'C06Q6FRSFKJ'
         env:
+          INPUT_CHANNEL-ID: 'C06Q6FRSFKJ'
           SLACK_COLOR: 'good'
           SLACK_MESSAGE: 'Test Succeeded: ${{ github.run_id }}'
           SLACK_TITLE: 'Test Execution Succeeded'
@@ -63,9 +62,8 @@ jobs:
       - name: Notify Slack on failure
         uses: rtCamp/action-slack-notify@v2
         if: failure()
-        with:
-          channel-id: 'C06Q6FRSFKJ'
         env:
+          INPUT_CHANNEL-ID: 'C06Q6FRSFKJ'
           SLACK_COLOR: 'danger'
           SLACK_MESSAGE: 'Test Failed: ${{ github.run_id }}'
           SLACK_TITLE: 'Test Execution Failed'
