@@ -10,7 +10,7 @@ pipeline {
             steps {
                 bat 'call "%PYTHON_PATH%" -m venv venv'
                 bat 'call venv\\Scripts\\python.exe -m pip install --upgrade pip'
-                bat 'call venv\\Scripts\\pip.exe install -r requirements.txt pytest pytest-html'
+                bat 'call venv\\Scripts\\pip.exe install -r requirements.txt -m pytest pytest-html'
             }
         }
         stage('Run API Tests with Pytest') {
