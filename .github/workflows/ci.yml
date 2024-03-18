@@ -48,23 +48,29 @@ jobs:
           path: ./*.html
 
       - name: Notify Slack on success
-        if: success()
+        id: slack
         uses: rtCamp/action-slack-notify@v2
+        if: success()
+        with:
+          channel-id: 'C06Q6FRSFKJ'
         env:
-          SLACK_CHANNEL: C06Q6FRSFKJ
           SLACK_COLOR: 'good'
           SLACK_MESSAGE: 'Test Succeeded: ${{ github.run_id }}'
           SLACK_TITLE: 'Test Execution Succeeded'
           SLACK_USERNAME: 'GitHub Actions'
           SLACK_WEBHOOK: 'https://hooks.slack.com/services/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'
+          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
 
       - name: Notify Slack on failure
-        if: failure()
+        id: slack
         uses: rtCamp/action-slack-notify@v2
+        if: failure()
+        with:
+          channel-id: 'C06Q6FRSFKJ'
         env:
-          SLACK_CHANNEL: C06Q6FRSFKJ
           SLACK_COLOR: 'danger'
           SLACK_MESSAGE: 'Test Failed: ${{ github.run_id }}'
           SLACK_TITLE: 'Test Execution Failed'
           SLACK_USERNAME: 'GitHub Actions'
           SLACK_WEBHOOK: 'https://hooks.slack.com/services/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'
+          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
