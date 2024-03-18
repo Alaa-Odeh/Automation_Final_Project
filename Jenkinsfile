@@ -5,25 +5,28 @@ pipeline {
         PIP_PATH = '"C:\\Users\\Alaa Oda\\AppData\\Local\\Programs\\Python\\Python312\\Scripts\\pip.exe"'
         TEST_REPORTS = 'test-reports'
     }
-    stages {
+     stages {
         stage('Setup Environment') {
             steps {
                 bat 'call "%PYTHON_PATH%" -m venv venv'
                 bat 'call venv\\Scripts\\python.exe -m pip install --upgrade pip'
-                bat 'call venv\\Scripts\\pip.exe install -r requirements.txt'
-                bat '%PIP_PATH% install pytest pytest-html'           }
+                bat 'call venv\\Scripts\\pip.exe install -r requirements.txt pytest pytest-html'
+            }
         }
         stage('Run API Tests with Pytest') {
             steps {
-                bat '%PYTHON% -m pytest tests/test_api/api_test_runner.py --html=test-reports\\report.html --self-contained-html'
+                // Run pytest with the HTML report flag
+                bat "%PYTHON% -m pytest --html=${TEST_REPORTS}\\report.html --self-contained-html"
             }
         }
-
     }
-     post {
+    post {
         always {
-            junit '**/test-reports/*.xml'
-            archiveArtifacts artifacts: 'test-reports/*.html', allowEmptyArchive: true
+            // Archive the HTML report
+            archiveArtifacts artifacts: "${TEST_REPORTS}/*.html", allowEmptyArchive: true
+
+            // If you also generate JUnit-style XML reports, you can publish them like this:
+            // junit "${TEST_REPORTS}/*.xml"
         }
     }
-  }
+}
