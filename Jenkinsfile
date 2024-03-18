@@ -31,3 +31,4 @@ pipeline {
             archiveArtifacts artifacts: "${TEST_REPORTS}/*.html", allowEmptyArchive: true
         }
     }
+}
