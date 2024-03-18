@@ -10,13 +10,14 @@ pipeline {
             steps {
                 bat 'call "%PYTHON_PATH%" -m venv venv'
                 bat 'call venv\\Scripts\\python.exe -m pip install --upgrade pip'
-                bat 'call venv\\Scripts\\pip.exe install -r requirements.txt -m pytest pytest-html'
+                bat 'call venv\\Scripts\\pip.exe install -r requirements.txt'
+                bat 'call venv\\Scripts\\pip.exe install pytest pytest-html'
             }
         }
         stage('Run API Tests with Pytest') {
             steps {
                 // Run pytest with the HTML report flag
-                bat "%PYTHON_PATH% -m pytest --html=${TEST_REPORTS}\\report.html --self-contained-html"
+                bat 'call venv\\Scripts\\python.exe -m pytest tests/test_api/api_test_runner.py --html=${env.TEST_REPORTS}\\report.html --self-contained-html'
             }
         }
     }
