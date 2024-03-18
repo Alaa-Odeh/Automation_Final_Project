@@ -48,7 +48,6 @@ jobs:
           path: ./*.html
 
       - name: Notify Slack on success
-        id: slack
         uses: rtCamp/action-slack-notify@v2
         if: success()
         with:
@@ -62,7 +61,6 @@ jobs:
           SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
 
       - name: Notify Slack on failure
-        id: slack
         uses: rtCamp/action-slack-notify@v2
         if: failure()
         with:
