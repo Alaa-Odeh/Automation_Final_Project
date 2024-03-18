@@ -43,13 +43,14 @@ class TestBlogs(TestCase):
                           f"The 'news_site field does not have Match for blogs with id {blog['id']}")
 
 
-    @unittest.skip("Skipping this test")
+    #@unittest.skip("Skipping this test")
     def test_blogs_with_title_in_news_site(self,news_site="Planetary Society",title="Mars"):
 
         self.blogs.get_blogs_with_titles_in_news_site(news_site,title)
         for blog in self.blogs.result:
-            self.assertIn(title,blog['title'],f"The 'title field does not have Mars for blogs with id {blog['id']}")
+            self.assertIn(title, blog['title'], f"The 'title' field does not have Mars for blogs with id {blog['id']}")
             self.assertEqual(blog['news_site'], news_site,
-                             f"The 'news_site field does not have Match for blogs with id {blog['id']}")
+                             f"The 'news_site' field does not have Match for blogs with id {blog['id']}")
+
 
 

@@ -4,6 +4,8 @@
   "version": "1.0.0",
   "description": "Testing API",
   "grid": true,
-  "grid type": "serial",
-  "grid size": 18
+  "grid type": "parallel",
+  "grid size": 18,
+  "jira_url":"https://alaao24.atlassian.net/",
+  "project_key": "FAP"
   }

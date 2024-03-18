@@ -7,5 +7,8 @@
   "grid": true,
   "browser": "Chrome",
   "grid type": "parallel",
-  "grid size": 3
+  "grid size": 3,
+  "jira_url":"https://alaao24.atlassian.net/",
+  "project_key": "FAP"
+
 }
