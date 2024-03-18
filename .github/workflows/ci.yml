@@ -31,13 +31,34 @@ jobs:
       - name: Run UI test_login.py
         run: python -m unittest tests.test_web.test_log_in_page.Login_Page_Test.test_run
 
-      - name: Post to a Slack channel
-        id: slack
-        uses: slackapi/slack-github-action@v1.25.0
-        with:
+      - name: Run tests with pytest
+        run: |
+            pytest tests/test_api/api_test_runner.py --junitxml=report_api.html
+            pytest tests/test_web/test_log_in_page.py --junitxml=report_ui.html
+          
 
-          channel-id: 'C06Q6JPDAQ0'
-          # For posting a simple plain text message
-          slack-message: "GitHub build result: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
+      - name: Upload Test Report
+        uses: actions/upload-artifact@v2
+        with:
+          name: Test-Reports
+          path: ./*.html
+
+      - name: Notify Slack on failure
+        if: failure()
+        uses: rtCamp/action-slack-notify@v2
         env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          SLACK_CHANNEL: your-channel-id
+          SLACK_COLOR: 'danger'
+          SLACK_MESSAGE: 'Test Failed: ${{ github.run_id }}'
+          SLACK_TITLE: 'Test Execution Failed'
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+
+      - name: Notify Slack on success
+        if: success()
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_CHANNEL: your-channel-id
+          SLACK_COLOR: 'good'
+          SLACK_MESSAGE: 'Test Succeeded: ${{ github.run_id }}'
+          SLACK_TITLE: 'Test Execution Succeeded'
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
