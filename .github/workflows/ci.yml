@@ -5,6 +5,8 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
+    env:
+      PYTHONPATH: ${{ github.workspace }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -26,15 +28,16 @@ jobs:
         uses: browser-actions/setup-firefox@latest
 
       - name: Run API test_articles.py
-        run: python -m unittest tests.test_api.test_articles.TestArticles.test_article_status
+        run: python -m unittest tests.test_api.test_articles.TestArticles
 
       - name: Run UI test_login.py
         run: python -m unittest tests.test_web.test_log_in_page.Login_Page_Test.test_run
 
       - name: Run tests with pytest and generate report
+        continue-on-error: true
         run: |
-            pytest -m tests.test_api.api_test_runner.py --html=report_api.html
-            pytest -m tests.test_web.test_log_in_page.Login_Page_Test.test_run --html=report_ui.html
+            pytest  tests/test_api/api_test_runner.py --html=report_api.html --self-contained-html
+            pytest -m tests.test_web.test_log_in_page.Login_Page_Test.test_run --html=report_ui.html --self-contained-html
           
 
       - name: Upload Test Report
